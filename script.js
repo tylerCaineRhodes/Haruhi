@@ -1,13 +1,15 @@
 (deleteText = (element) => {
-  if(element.hasChildNodes()){
+  if(element.hasChildNodes()) {
     element.childNodes.forEach(node => deleteText(node));
-  } else if (element.nodeType === Text.TEXT_NODE){
-    if (element.textContent.match(/(Suzumiya)|(Haruhi)|(涼宮)|(ハルヒ)/gi)) {
-      element.textContent = element.textContent.replace(
-        /(Suzumiya)|(Haruhi)|(涼宮)|(ハルヒ)/gi,
-        ''
-      );
-      // element.remove();
-    } 
+    return;
   }
+
+  if (element.nodeType !== Text.TEXT_NODE) return;
+
+  const haruhiRegex = /(Suzumiya)|(Haruhi)|(涼宮)|(ハルヒ)/gi;
+  const haruhiWasMentioned = element.textContent.match(haruhiRegex);
+
+  if (!haruhiWasMentioned) return;
+
+  element.textContent = element.textContent.replace(haruhiRegex, '🤫');
 })(document);
